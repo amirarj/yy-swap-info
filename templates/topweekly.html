@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>YY Swap Info (Unofficial)</title>
+</head>
+
+<body class="bg-[#121614] font-mono">
+  <body class="bg-[#121614] font-mono">
+    <nav class="lg:px-10 p-2">
+    <div class="container flex flex-wrap justify-between items-center mx-auto">
+      <div class="inline-flex shadow-md hover:shadow-lg focus:shadow-lg space-x-1 items-center" role="group">
+        <button type="button" class="rounded-sm inline-block px-6 py-2.5 bg-green-500 text-white font-medium text-sm leading-tight uppercase hover:bg-green-800 focus:bg-green-800 focus:outline-none focus:ring-0 active:bg-green-700 transition duration-150 ease-in-out" id="nonunderlying">non-UnderLying</button>
+        <button type="button" class="rounded-sm inline-block px-6 py-2.5 bg-green-500 text-white font-medium text-sm leading-tight uppercase hover:bg-green-800 focus:bg-green-800 focus:outline-none focus:ring-0 active:bg-green-800 transition duration-150 ease-in-out" id="underlying">UnderLying</button>
+      </div>
+    <div class="hidden w-full md:block md:w-auto" id="mobile-menu">
+    <ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm">
+    <li>
+    <a href="/" class="block py-2 pr-4 pl-3 text-gray-300 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-300 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">HOME</a>
+    </li>
+    <li>
+    <a href="/topweekly" class="block py-2 pr-4 pl-3 text-gray-300 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-300 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">TOP WEEKLY</a>
+    </li>
+    <li>
+    <a href="/contracts" class="block py-2 pr-4 pl-3 text-gray-300 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-300 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">CONTRACTS</a>
+    </li>
+    </ul>
+    </div>
+    </div>
+    </nav>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-3 lg:px-10 p-2 font-mono">
+    <div id="spark1"></div>
+    <div id="spark2"></div>
+    <div id="spark3"></div>
+    <div id="spark4"></div>
+  </div>
+  <!-- </div> -->
+</body>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+
+
+
+  var AdapterCountSwap = {
+    fill: {
+      gradient: {
+        enabled: true,
+        opacityFrom: 0.60,
+        opacityTo: 0
+      }
+    },
+    chart: {
+      fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;',
+      type: 'bar',
+      background: '#252927',
+      zoom: {
+        enabled: false
+      },
+      toolbar: {
+        show: true,
+        tools: {
+          download: true,
+          selection: false,
+          zoom: false,
+          zoomin: false,
+          zoomout: false,
+          pan: false,
+          reset: false
+        },
+      },
+    },
+    colors: ["#00C864"],
+    title: {
+      text: 'Weekly Top Adapters by Swap Count',
+      align: 'left',
+      margin: 20,
+      style: {
+        color: '#BCBDBD',
+        fontWeight: 18,
+      }
+    },
+    series: [{
+      name: 'Swaps',
+      data: {{AdapterscoreitemsCountSwapList}}
+    }],
+    xaxis: {
+      categories: {{AdapteritemsCountSwapList | tojson}},
+      reversed: true,
+      labels: {
+        style: {
+          colors: '#F0F0F0',
+          fontSize: '13.5px',
+        },
+      },
+    },
+    yaxis: {
+      labels: {
+        style: {
+          colors: '#F0F0F0',
+          fontSize: '14.5px',
+        },
+        forceNiceScale: true,
+      },
+    },
+    grid: {
+      borderColor: "#7A7A7A"
+    },
+    lagend: {
+      show: true
+    },
+    tooltip: {
+      theme: 'dark',
+      style: {
+        fontSize: '14.5px'
+      },
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 5,
+        dataLabels : {
+          position : 'top'
+        }
+      }
+    },
+    fill: {
+      type: 'gradient',
+      gradient: {
+        shade: 'dark',
+        type: "horizontal",
+        shadeIntensity: 0.25,
+        gradientToColors: undefined,
+        inverseColors: true,
+        opacityFrom: 0.85,
+        opacityTo: 0.85,
+        stops: [50, 0, 100]
+      },
+    },
+    dataLabels : {
+      style : {
+        fontSize : '13.5px'
+      }
+    }
+  }
+
+  var AdapterVolumeSwap = {
+    dataLabels: {
+      style : {
+         fontSize : '13.5px'
+      },
+      enabled: true,
+      formatter: function(value) {
+        return "$" + value.toLocaleString();
+      },
+    },
+    chart: {
+      fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;',
+      type: 'bar',
+      background: '#252927',
+      zoom: {
+        enabled: false
+      },
+      toolbar: {
+        show: true,
+        tools: {
+          download: true,
+          selection: false,
+          zoom: false,
+          zoomin: false,
+          zoomout: false,
+          pan: false,
+          reset: false
+        },
+      },
+    },
+    colors: ["#00C864"],
+    title: {
+      text: 'Weekly Top Adapters by Volume',
+      align: 'left',
+      margin: 20,
+      style: {
+        color: '#BCBDBD',
+        fontWeight: 18,
+      }
+    },
+    series: [{
+      name: 'Volume',
+      data: {{AdapterscoreitemsVolumeSwapList}}
+    }],
+    xaxis: {
+      categories: {{AdapteritemsVolumeSwapList | tojson}},
+      reversed: true,
+      labels: {
+        style: {
+          colors: '#F0F0F0',
+          fontSize: '13.5px',
+        },
+      },
+    },
+    yaxis: {
+      labels: {
+        style: {
+          colors: '#F0F0F0',
+          fontSize : '15px'
+        },
+        formatter: function(value) {
+          return "$" + value.toLocaleString();
+        },
+        forceNiceScale: true,
+      },
+    },
+    grid: {
+      borderColor: "#7A7A7A"
+    },
+    lagend: {
+      show: true
+    },
+    tooltip: {
+      style : {
+        fontSize: '14px'
+      },
+      theme: 'dark'
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 5,
+        dataLabels : {
+          position : 'top'
+        }
+      }
+    },
+    fill: {
+      type: 'gradient',
+      gradient: {
+        shade: 'dark',
+        type: "horizontal",
+        shadeIntensity: 0.25,
+        gradientToColors: undefined,
+        inverseColors: true,
+        opacityFrom: 0.85,
+        opacityTo: 0.85,
+        stops: [50, 0, 100]
+      },
+    }
+  }
+
+  var TokenCountSwap = {
+    toolbar: {
+      show: true,
+      tools: {
+        download: true,
+        selection: false,
+        zoom: false,
+        zoomin: false,
+        zoomout: false,
+        pan: false,
+        reset: false
+      },
+    },
+    chart: {
+      fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;',
+      type: 'bar',
+      background: '#252927',
+      zoom: {
+        enabled: false
+      },
+    },
+    colors: ["#00C864"],
+    title: {
+      text: 'Weekly Top Tokens by Swap Count (non-UnderLying)',
+      align: 'left',
+      margin: 20,
+      style: {
+        color: '#BCBDBD',
+        fontWeight: 18,
+      }
+    },
+    series: [{
+      name: 'Swaps',
+      data: {{ scoreitemsCountSwapList }}
+    }],
+    xaxis: {
+      categories: {{tokenitemsCountSwapList | tojson}},
+      reversed: true,
+      labels: {
+        style: {
+          colors: '#F0F0F0',
+          fontSize : '13.5px'
+        },
+      },
+    },
+    yaxis: {
+      labels: {
+        style: {
+          colors: '#F0F0F0',
+          fontSize : '15px'
+        },
+        forceNiceScale: true,
+      },
+    },
+    grid: {
+      borderColor: "#7A7A7A"
+    },
+    lagend: {
+      show: true
+    },
+    tooltip: {
+      style: {
+        fontSize: '14.5px'
+      },
+      theme: 'dark',
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 5,
+        dataLabels : {
+          position: 'top',
+        }
+      },
+    },
+    dataLabels: {
+      enabled: true,
+      style : {
+         fontSize : '13.5px'
+      },
+    },
+    fill: {
+      type: 'gradient',
+      gradient: {
+        shade: 'dark',
+        type: "horizontal",
+        shadeIntensity: 0.25,
+        gradientToColors: undefined,
+        inverseColors: true,
+        opacityFrom: 0.85,
+        opacityTo: 0.85,
+        stops: [50, 0, 100]
+      },
+    }
+  }
+
+  var TokenVolumeSwap = {
+    dataLabels: {
+      enabled: true,
+      style : {
+         fontSize : '13.5px'
+      },
+      formatter: function(value) {
+        return "$" + value.toLocaleString();
+      },
+    },
+    chart: {
+      fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;',
+      type: 'bar',
+      background: '#252927',
+      zoom: {
+        enabled: false
+      },
+      toolbar: {
+        show: true,
+        tools: {
+          download: true,
+          selection: false,
+          zoom: false,
+          zoomin: false,
+          zoomout: false,
+          pan: false,
+          reset: false
+        },
+      },
+    },
+    colors: ["#00C864"],
+    title: {
+      text: 'Weekly Top Tokens by Volume (non-UnderLying)',
+      align: 'left',
+      margin: 20,
+      style: {
+        color: '#BCBDBD',
+        fontWeight: 18,
+      }
+    },
+    series: [{
+      name: 'Volume',
+      data: {{scoreitemsVolumeSwapList}}
+    }],
+    xaxis: {
+      categories: {{tokenitemsVolumeSwapList | tojson}},
+      reversed: true,
+      labels: {
+        style: {
+          colors: '#F0F0F0',
+          fontSize : '13.5px'
+        },
+      },
+    },
+    yaxis: {
+      labels: {
+        style: {
+          colors: '#F0F0F0',
+          fontSize : '15px',
+        },
+        formatter: function(value) {
+          return "$" + value.toLocaleString();
+        },
+        forceNiceScale: true,
+      },
+    },
+    grid: {
+      borderColor: "#7A7A7A"
+    },
+    lagend: {
+      show: true
+    },
+    tooltip: {
+      theme: 'dark',
+      style: {
+        fontSize: '14.5px'
+      },
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 5,
+        dataLabels : {
+          position: 'top',
+        },
+      }
+    },
+    fill: {
+      type: 'gradient',
+      gradient: {
+        shade: 'dark',
+        type: "horizontal",
+        shadeIntensity: 0.25,
+        gradientToColors: undefined,
+        inverseColors: true,
+        opacityFrom: 0.85,
+        opacityTo: 0.85,
+        stops: [50, 0, 100]
+      },
+    }
+  }
+
+  var UnderlyingTokenCountSwap = {
+    toolbar: {
+      show: true,
+      tools: {
+        download: true,
+        selection: false,
+        zoom: false,
+        zoomin: false,
+        zoomout: false,
+        pan: false,
+        reset: false
+      },
+    },
+    chart: {
+      fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;',
+      type: 'bar',
+      background: '#252927',
+      zoom: {
+        enabled: false
+      },
+    },
+    colors: ["#00C864"],
+    title: {
+      text: 'Weekly Top Tokens by Swap Count (UnderLying)',
+      align: 'left',
+      margin: 20,
+      style: {
+        color: '#BCBDBD',
+        fontWeight: 18,
+      }
+    },
+    series: [{
+      name: 'Swaps',
+      data: {{ UnderlyingscoreitemsCountSwapList }}
+    }],
+    xaxis: {
+      categories: {{UnderlyingtokenitemsCountSwapList | tojson}},
+      reversed: true,
+      labels: {
+        style: {
+          colors: '#F0F0F0',
+          fontSize : '13.5px'
+        },
+      },
+    },
+    yaxis: {
+      labels: {
+        style: {
+          colors: '#F0F0F0',
+          fontSize : '15px'
+        },
+        forceNiceScale: true,
+      },
+    },
+    grid: {
+      borderColor: "#7A7A7A"
+    },
+    lagend: {
+      show: true
+    },
+    tooltip: {
+      style: {
+        fontSize: '14.5px'
+      },
+      theme: 'dark',
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 5,
+        dataLabels : {
+          position: 'top',
+        }
+      },
+    },
+    dataLabels: {
+      enabled: true,
+      style : {
+         fontSize : '13.5px'
+      },
+    },
+    fill: {
+      type: 'gradient',
+      gradient: {
+        shade: 'dark',
+        type: "horizontal",
+        shadeIntensity: 0.25,
+        gradientToColors: undefined,
+        inverseColors: true,
+        opacityFrom: 0.85,
+        opacityTo: 0.85,
+        stops: [50, 0, 100]
+      },
+    }
+  }
+
+  var UnderlyingTokenVolumeSwap = {
+    dataLabels: {
+      enabled: true,
+      style : {
+         fontSize : '13.5px'
+      },
+      formatter: function(value) {
+        return "$" + value.toLocaleString();
+      },
+    },
+    chart: {
+      fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;',
+      type: 'bar',
+      background: '#252927',
+      zoom: {
+        enabled: false
+      },
+      toolbar: {
+        show: true,
+        tools: {
+          download: true,
+          selection: false,
+          zoom: false,
+          zoomin: false,
+          zoomout: false,
+          pan: false,
+          reset: false
+        },
+      },
+    },
+    colors: ["#00C864"],
+    title: {
+      text: 'Weekly Top Tokens by Volume (UnderLying)',
+      align: 'left',
+      margin: 20,
+      style: {
+        color: '#BCBDBD',
+        fontWeight: 18,
+      }
+    },
+    series: [{
+      name: 'Volume',
+      data: {{UnderlyingscoreitemsVolumeSwapList}}
+    }],
+    xaxis: {
+      categories: {{UnderlyingtokenitemsVolumeSwapList | tojson}},
+      reversed: true,
+      labels: {
+        style: {
+          colors: '#F0F0F0',
+          fontSize : '13.5px'
+        },
+      },
+    },
+    yaxis: {
+      labels: {
+        style: {
+          colors: '#F0F0F0',
+          fontSize : '15px',
+        },
+        formatter: function(value) {
+          return "$" + value.toLocaleString();
+        },
+        forceNiceScale: true,
+      },
+    },
+    grid: {
+      borderColor: "#7A7A7A"
+    },
+    lagend: {
+      show: true
+    },
+    tooltip: {
+      theme: 'dark',
+      style: {
+        fontSize: '14.5px'
+      },
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 5,
+        dataLabels : {
+          position: 'top',
+        },
+      }
+    },
+    fill: {
+      type: 'gradient',
+      gradient: {
+        shade: 'dark',
+        type: "horizontal",
+        shadeIntensity: 0.25,
+        gradientToColors: undefined,
+        inverseColors: true,
+        opacityFrom: 0.85,
+        opacityTo: 0.85,
+        stops: [50, 0, 100]
+      },
+    }
+  }
+
+  var chartTokenCountSwap = new ApexCharts(document.querySelector("#spark1"), TokenCountSwap);
+  chartTokenCountSwap.render();
+
+  var chartTokenVolumeSwap = new ApexCharts(document.querySelector("#spark2"), TokenVolumeSwap);
+  chartTokenVolumeSwap.render();
+
+  new ApexCharts(document.querySelector("#spark3"), AdapterCountSwap).render();
+  new ApexCharts(document.querySelector("#spark4"), AdapterVolumeSwap).render();
+
+  document.querySelector("#underlying").addEventListener("click", function() {
+    chartTokenCountSwap.updateOptions(UnderlyingTokenCountSwap);
+    chartTokenVolumeSwap.updateOptions(UnderlyingTokenVolumeSwap);
+  })
+
+  document.querySelector("#nonunderlying").addEventListener("click", function() {
+    chartTokenCountSwap.updateOptions(TokenCountSwap);
+    chartTokenVolumeSwap.updateOptions(TokenVolumeSwap);
+  })
+
+</script>
+
+</html>

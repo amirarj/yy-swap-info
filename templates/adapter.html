@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>YY Swap Info (Unofficial)</title>
+</head>
+
+<body class="bg-[#121614] font-mono">
+
+  <nav class="lg:px-10 p-2">
+  <div class="container flex flex-wrap justify-between items-center mx-auto">
+    <div class="inline-flex shadow-md hover:shadow-lg focus:shadow-lg space-x-1 items-center" role="group">
+      <button class="rounded-sm inline-block px-6 py-2.5 bg-[#252927] text-white font-medium text-sm leading-tight cursor-default">{{ symbol }} Adapter</button>
+      <!-- <button type="button" class="rounded-sm inline-block px-6 py-2.5 bg-green-500 text-white font-medium text-sm leading-tight uppercase hover:bg-green-800 focus:bg-green-800 focus:outline-none focus:ring-0 active:bg-green-800 transition duration-150 ease-in-out" id="underlying">UnderLying</button> -->
+    </div>
+  <div class="hidden w-full md:block md:w-auto" id="mobile-menu">
+  <ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm">
+  <li>
+  <a href="/" class="block py-2 pr-4 pl-3 text-gray-300 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-300 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">HOME</a>
+  </li>
+  <li>
+  <a href="/topweekly" class="block py-2 pr-4 pl-3 text-gray-300 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-300 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">TOP WEEKLY</a>
+  </li>
+  <li>
+  <a href="/contracts" class="block py-2 pr-4 pl-3 text-gray-300 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-300 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">CONTRACTS</a>
+  </li>
+  </ul>
+  </div>
+  </div>
+  </nav>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-3 lg:px-10 p-2 font-mono">
+    <div id="spark2"></div>
+    <div id="spark3"></div>
+  </div>
+  <div class="grid grid-cols-1 lg:grid-cols-1 lg:gap-x-3 lg:px-10 p-2 font-mono">
+  <div id="spark1"></div>
+  </div>
+  <!-- </div> -->
+</body>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+
+  var options = {
+    dataLabels: {
+      enabled: true,
+      style: {
+        fontSize: '15.2px',
+      },
+      formatter: function(text, op) {
+            return [text, op.value]
+      },
+      offsetY: -4
+      },
+      colors: ["#00C864"],
+      series: [
+      {
+        data: {{ AdapterMostTokenSwapitemsList | tojson }}
+      }
+    ],
+      legend: {
+      show: true
+    },
+    chart: {
+      fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;',
+      type: 'treemap',
+      height: '400px'
+    },
+    stroke: {
+      curve: 'smooth',
+      width: 1.5,
+      colors: ["#002814"],
+    },
+    tooltip: {
+      style: {
+        fontSize: '14.5px'
+      },
+      theme: 'dark',
+    },
+    title: {
+      text: 'Weekly Most Traded Tokens',
+      align: 'left',
+      margin: 20,
+      style: {
+        color: '#BCBDBD',
+        fontWeight: 18,
+      }
+    },
+    plotOptions: {
+      treemap: {
+        enableShades: true,
+        shadeIntensity: 0.45,
+        reverseNegativeShade: true,
+        colorScale: {
+          ranges: [
+            {
+              from: 1,
+              color: '#00C864'
+            },
+          ]
+        }
+      }
+    }
+};
+var SwapCountOptions = {
+  dataLabels: {
+    enabled: true,
+    style: {
+      fontSize: '16px',
+    },
+    background: {
+      padding: 4,
+      borderRadius: 4,
+    }
+  },
+  fill: {
+    gradient: {
+      enabled: true,
+      opacityFrom: 0.60,
+      opacityTo: 0
+    }
+  },
+  title: {
+    text: 'Swap Count',
+    align: 'left',
+    margin: 20,
+    style: {
+      color: '#BCBDBD',
+      fontWeight: 18,
+    }
+  },
+  chart: {
+    fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;',
+    type: 'area',
+    background: '#252927',
+    zoom: {
+      enabled: false
+    },
+    toolbar: {
+      show: true,
+      tools: {
+        download: true,
+        selection: false,
+        zoom: false,
+        zoomin: false,
+        zoomout: false,
+        pan: false,
+        reset: false
+      },
+    },
+  },
+  colors: ["#00C864"],
+  stroke: {
+    curve: 'smooth',
+    width: 5.5
+  },
+  lagend: {
+    show: true
+  },
+  tooltip: {
+    style: {
+      fontSize: '14px'
+    },
+    theme: 'dark',
+    x: {
+      format: 'dd MMM'
+    }
+  },
+  series: [{
+    name: 'Swaps',
+    data: {{AdapterTotalCountSwapList}}
+  }],
+  xaxis: {
+    type: 'datetime',
+    categories: {{daysList | tojson}},
+    tickPlacement: 'on',
+    labels: {
+      show: true,
+      style: {
+        colors: '#F0F0F0',
+        fontSize: '15px',
+      },
+    },
+  },
+  yaxis: {
+    labels: {
+      style: {
+        colors: '#F0F0F0',
+        fontSize: '15px',
+      },
+    },
+    forceNiceScale: true,
+  },
+  grid: {
+    borderColor: "#7A7A7A"
+  },
+}
+
+//
+
+var SwapVolumeOptions = {
+  title: {
+    text: 'Swap Volume',
+    align: 'left',
+    margin: 20,
+    style: {
+      color: '#BCBDBD',
+      fontWeight: 18,
+    }
+  },
+  chart: {
+    fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;',
+    type: 'area',
+    background: '#252927',
+    // height: 400,
+    zoom: {
+      enabled: false
+    },
+    toolbar: {
+      show: true,
+      tools: {
+        download: true,
+        selection: false,
+        zoom: false,
+        zoomin: false,
+        zoomout: false,
+        pan: false,
+        reset: false
+      },
+    },
+  },
+  colors: ["#00C864"],
+  grid: {
+    borderColor: "#7A7A7A"
+  },
+  stroke: {
+    curve: 'smooth',
+    width: 5.5
+  },
+  lagend: {
+    show: false
+  },
+  dataLabels: {
+    enabled: true,
+    formatter: function(value) {
+      return "$" + value.toLocaleString();
+    },
+    style: {
+      fontSize: '15px',
+    },
+    background: {
+      padding: 4,
+      borderRadius: 4,
+    }
+  },
+  fill: {
+    gradient: {
+      enabled: true,
+      opacityFrom: 0.60,
+      opacityTo: 0
+    }
+  },
+  tooltip: {
+    style: {
+      fontSize: '14.5px'
+    },
+    theme: 'dark',
+    x: {
+      format: 'dd MMM'
+    }
+  },
+  series: [{
+    name: 'Volume',
+    data: {{ AdapterTotalVolumeSwapList }}
+  }],
+  xaxis: {
+    type: 'datetime',
+    categories: {{ daysList | tojson }},
+    tickPlacement: 'on',
+    labels: {
+      show: true,
+      style: {
+        colors: '#F0F0F0',
+        fontSize : '15px'
+      },
+    },
+  },
+  yaxis: {
+    labels: {
+      style: {
+        colors: '#F0F0F0',
+        fontSize : '15px'
+      },
+      formatter: function(value) {
+        return "$" + value.toLocaleString();
+      }
+    },
+    forceNiceScale: true,
+  }
+}
+
+var chartTokenVolumeSwapTreemap = new ApexCharts(document.querySelector("#spark1"), options);
+chartTokenVolumeSwapTreemap.render();
+var chartSwapCountOptions = new ApexCharts(document.querySelector("#spark2"), SwapCountOptions);
+chartSwapCountOptions.render();
+var chartTokenVolumeSwap = new ApexCharts(document.querySelector("#spark3"), SwapVolumeOptions);
+chartTokenVolumeSwap.render();
+
+</script>

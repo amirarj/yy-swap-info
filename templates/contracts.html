@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>YY Swap Info (Unofficial)</title>
+</head>
+
+<body class="bg-[#121614] font-mono">
+
+  <nav class="lg:px-10 p-2">
+  <div class="container flex flex-wrap justify-between items-center mx-auto">
+    <!-- <div class="inline-flex shadow-md hover:shadow-lg focus:shadow-lg space-x-1 items-center" role="group"> -->
+      <div class="mb-3 xl:w-96 w-2/4 mt-2">
+  <input
+    type="search"
+    class="
+      form-control
+      block
+      w-full
+      px-3
+      py-1.5
+      text-base
+      font-normal
+      text-gray-300
+      bg-[#121614] bg-clip-padding
+      border-4 border-solid border-[#252927]
+      rounded
+      transition
+      ease-in-out
+      m-0
+      focus:text-gray-300 focus:border-border-[#252927] focus:outline-none focus:border-4
+    "
+    id="exampleSearch"
+    placeholder="Search for Tokens or Adapters"
+  />
+</div>
+    <!-- </div> -->
+  <div class="hidden w-full md:block md:w-auto" id="mobile-menu">
+  <ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm">
+  <li>
+  <a href="/" class="block py-2 pr-4 pl-3 text-gray-300 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-300 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">HOME</a>
+  </li>
+  <li>
+  <a href="/topweekly" class="block py-2 pr-4 pl-3 text-gray-300 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-300 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">TOP WEEKLY</a>
+  </li>
+  <li>
+  <a href="/contracts" class="block py-2 pr-4 pl-3 text-gray-300 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-300 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">CONTRACTS</a>
+  </li>
+  </ul>
+  </div>
+  </div>
+  </nav>
+
+  <div class="container mx-auto lg:px-10 p-2">
+    <button class="rounded-sm px-6 py-2.5 bg-green-500 text-white font-medium text-sm leading-tight cursor-default uppercase">Tokens</button>
+      <div class="grid grid-cols-4 lg:grid-cols-8 lg:gap-x-3 lg:gap-y-3 font-mono pt-3 gap-x-5 gap-y-5" id="tokens">
+        {% for token in tokensList %}
+        <a class="btn text-center rounded-sm inline-block px-6 py-2.5 bg-[#252927] text-white font-medium text-sm leading-tight truncate" href="{{ url_for('token' ,tok=token.address) }}" target="_blank">
+          {{ token.name }}
+        </a>
+        {% endfor %}
+    </div>
+    <button class="rounded-sm px-6 py-2.5 bg-green-500 text-white font-medium text-sm leading-tight cursor-default uppercase mt-4">Adapters</button>
+    <div class="grid grid-cols-4 lg:grid-cols-8 lg:gap-x-3 lg:gap-y-3 font-mono pt-3 gap-x-5 gap-y-5" id="adapters">
+      {% for adp in adaptersList %}
+      <a class="btn text-center rounded-sm inline-block px-6 py-2.5 bg-[#252927] text-white font-medium text-sm leading-tight truncate" href="{{ url_for('adapter' ,ad=adp.address) }}" target="_blank">
+        {{ adp.name }}
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+$(document).ready(function(){
+  $("#exampleSearch").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#adapters a, #tokens a").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>

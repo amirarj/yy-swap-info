@@ -1,0 +1,8 @@
+__pycache__/
+.fandogh/
+env/
+celerybeat-schedule.bak
+celerybeat-schedule.dat
+celerybeat-schedule.dir
+docker-entry.sh
+worker.py
